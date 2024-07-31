@@ -1,0 +1,51 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+*.pid
+*.seed
+
+# Runtime data
+pids/
+*.pid
+
+# Directory for temporary files
+tmp/
+temp/
+
+# Environment variables
+.env
+.env.*
+
+# Build output
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# npm package-lock
+package-lock.json
+
+
+# System files
+*.swp
+*.swo
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Environment files (for docker-compose or Kubernetes)
+docker-compose.override.yml
+*.env
