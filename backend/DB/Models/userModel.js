@@ -8,7 +8,10 @@ const userSchema = {
   },
   password: {
     type: String,
-    required: true,
+  },
+  googleId: {
+    type: String,
+    unique: true,
   },
 };
 

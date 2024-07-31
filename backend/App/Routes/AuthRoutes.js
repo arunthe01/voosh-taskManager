@@ -7,7 +7,7 @@ const { emailRegex } = require("../../Utils/regex.js");
 // Signup Route
 Authrouter.post("/signup", async (req, res) => {
   const { email, password } = req.body;
-
+  console.log("insided signup");
   try {
     if (await userAlreadyExists(email)) {
       //console.log("User already exists");
