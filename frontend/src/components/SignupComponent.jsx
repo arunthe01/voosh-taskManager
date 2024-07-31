@@ -43,6 +43,7 @@ function SignupComponent() {
        password:loginState.password
     }).then((res)=>{
         alert("user Created successfuly, please login!");
+        navigate('/login');
         setLoginState({email:'',password:''});
     }).catch((err)=>{
       if(err.response.data.message){
