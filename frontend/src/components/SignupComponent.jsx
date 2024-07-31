@@ -46,9 +46,11 @@ function SignupComponent() {
         navigate('/login');
         setLoginState({email:'',password:''});
     }).catch((err)=>{
+      console.log(err);
       if(err.response.data.message){
          if(confirm("email is registered already please login!!")){
             setLoginState({email:'',password:''});
+            navigate('/login');
          }
 
       }
