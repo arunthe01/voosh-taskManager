@@ -46,12 +46,13 @@ function LoginComponent() {
         email:loginState.email,
         password:loginState.password
      }).then((res)=>{
-          console.log(res);
+         // console.log(res);
           localStorage.setItem('TaskManagerToken',res.data.token);
           setAuthState(res.data.token);
           navigate('/tasks');
      }).catch((err)=>{
-          alert("User is not created please try again !");
+          alert("User doesn't exist please signup!");
+          navigate('/signup');
      })
   };
 
