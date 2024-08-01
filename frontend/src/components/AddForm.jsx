@@ -70,6 +70,7 @@ function AddForm() {
                     </select>
             </div>
             <button className='bg-blue-500 my-2 p-1 text-white' onClick={()=>{validateAndAddTask()}}>Submit</button>
+            <button className='bg-red-500 my-2 p-1 text-white' onClick={()=>{ navigate('/tasks')}}>Go back</button> 
         </div>
    </div>
   )
