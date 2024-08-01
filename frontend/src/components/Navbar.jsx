@@ -17,7 +17,7 @@ function Navbar() {
         navigate('/login');
     })
   return (
-    <div className='h-16 flex justify-between items-center bg-blue-500 p-2'>
+    <div className='h-16 flex justify-between items-center bg-blue-500 p-2 w-screen'>
    
         <img src={notes} className='w-8'/>
         {

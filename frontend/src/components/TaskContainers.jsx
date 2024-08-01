@@ -13,7 +13,7 @@ function TaskContainers() {
 
     const [taskList, setTaskList] = useRecoilState(Tasks);
 
-    console.log(taskList);
+    //console.log(taskList);
 
     // useEffect(()=>{
     //      axios.get(BACKEND_URL+'/taskManager/tasks', {
@@ -141,7 +141,7 @@ function TaskContainers() {
 
     <DragDropContext onDragEnd={onDragEnd}>
 
-       <div className='flex justify-between'>
+       <div className='flex justify-center md:justify-between flex-wrap gap-3'>
             <TaskContainer tasklist={taskList.columns[0].values} id={0} title={'Todo'}/>
             <TaskContainer tasklist={taskList.columns[1].values} id={1} title={'In Progress'}/>
             <TaskContainer tasklist={taskList.columns[2].values} id={2} title={'Done'}/>
