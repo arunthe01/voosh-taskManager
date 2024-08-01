@@ -35,12 +35,13 @@ function ViewDetails() {
   return (
     <>
         <Navbar/>
-        <div className='flex justify-center'>
-            <div style={{width:'400px',height:'200px', borderWidth:'2.5px',boxShadow:'0px 0px 2px grey'}} className='p-4 m-5 border-solid  border-sky-500  rounded-md flex flex-col justify-between' >
-                    <label>title:{task.title}</label>
-                    <p>description:{task.description}</p>
-                    <div><label>status:</label>{task.status}</div>
-                    <Link to="/tasks" className='bg-blue-500 text-center text-white'>Go back</Link>
+        <div className='flex justify-center align-center'>
+            <div style={{width:'400px',height:'310px', borderWidth:'2.5px',boxShadow:'0px 0px 5px grey'}} className='p-4 m-5 border-solid  border-sky-500  rounded-md flex flex-col justify-between gap-5' >
+                    <h6 className='font-bold'>Task details</h6>
+                    <h2 className='font-semibold'>{`Title: ${task.title}`}</h2>
+                    <h2>{`Description: ${task.description}`}</h2>
+                    <h2>{`Status: ${task.status}`}</h2>
+                    <Link to="/tasks" className='bg-blue-500 text-center text-white float-right rounded-md'>Cancel</Link>
             </div>
         </div>
     </>
