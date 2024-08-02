@@ -21,7 +21,7 @@ function Navbar() {
    
         <img src={notes} className='w-8'/>
         {
-            value == 'login' ? (<Link className='text-white' to={'/signup'}> Signup</Link>):value=='signup'?(<Link className='text-white' to={'/login'}>Login</Link>):(<button className='bg-red-500 px-2 py-1 rounded-sm' onClick={()=>{logout()}}>Logout</button>)
+            value == 'login' ? (<div><button className='text-blue-500 rounded-md bg-white py-1 px-2 mr-2'>Login</button>  <Link className='text-white' to={'/signup'}> Signup</Link> </div>):value=='signup'?(<div><button className='text-blue-500 rounded-md bg-white py-1 px-2 mr-2'>Signup</button>  <Link className='text-white' to={'/login'}> Login</Link> </div>):(<button className='bg-red-500 px-2 py-1 rounded-sm' onClick={()=>{logout()}}>Logout</button>)
         }
     </div>
   )

@@ -91,7 +91,7 @@ function LoginComponent() {
                      alert('try again something went wrong');
                   }}/>
                 </div>
-                <p className='flex justify-center my-2'>don't have an account ? <Link to="/signup" className='ml-1'>Signup</Link></p>
+                <p className='flex justify-center my-2'>don't have an account ? <Link to="/signup" className='ml-1 text-blue-500'>Signup</Link></p>
             </div>
         </div>
     </div>

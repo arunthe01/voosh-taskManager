@@ -6,7 +6,7 @@ const { emailRegex } = require("../../Utils/regex.js");
 
 // Signup Route
 Authrouter.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName } = req.body;
   console.log("insided signup");
   try {
     if (await userAlreadyExists(email)) {
@@ -14,7 +14,12 @@ Authrouter.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    if (emailRegex.test(email) && password.length > 3) {
+    if (
+      emailRegex.test(email) &&
+      password.length > 3 &&
+      firstName.length > 0 &&
+      lastName.length > 0
+    ) {
       const savedUser = saveUser(email, password);
       if (savedUser) {
         return res.status(200).json({
