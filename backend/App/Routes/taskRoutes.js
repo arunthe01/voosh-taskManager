@@ -20,8 +20,10 @@ Taskrouter.post("/addTask", authenticate, async (req, res) => {
         status,
         user: id, // Use the extracted user ID
       });
-      await task.save();
-      res.status(200).json({ message: "Task saved successfully" });
+      const newTask = await task.save();
+      res
+        .status(200)
+        .json({ message: "Task saved successfully", newTask: newTask });
     } else {
       res.status(400).json({ message: "Invalid Inputs" });
     }
@@ -42,12 +44,18 @@ Taskrouter.put("/editTask", authenticate, async (req, res) => {
     console.log(title, description, status, taskId);
 
     if (title && description && status && taskId) {
-      await Task.findByIdAndUpdate(taskId, {
-        title,
-        description,
-        status,
-      });
-      res.status(200).json({ message: "Task edited successfully" });
+      const editedTask = await Task.findByIdAndUpdate(
+        taskId,
+        {
+          title,
+          description,
+          status,
+        },
+        { new: true }
+      );
+      res
+        .status(200)
+        .json({ message: "Task edited successfully", editedTask: editedTask });
     } else {
       res.status(400).json({ message: "Missing fields" });
     }
@@ -83,7 +91,7 @@ Taskrouter.get("/tasks", authenticate, async (req, res) => {
       }
     });
 
-    console.log(arr, "arun");
+    //console.log(arr, "arun");
 
     res.status(200).json({ tasks: arr });
   } catch (err) {

@@ -17,11 +17,13 @@ const isValidUser = async (email, password) => {
 };
 
 // Save a new user
-const saveUser = async (email, password) => {
+const saveUser = async (email, password, firstName, lastName) => {
   try {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new userModel({
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       password: hashedPassword, // Store hashed password
     });

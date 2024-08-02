@@ -4,7 +4,8 @@ import { useSetRecoilState } from 'recoil';
 import { Tasks } from '../store/Atoms';
 import axios from 'axios';
 import BACKEND_URL from '../../consts';
-
+import { useRecoilState } from 'recoil';
+import { isOpenAddForm } from '../store/Atoms';
 function SearchBar() {
 
  
@@ -12,6 +13,11 @@ function SearchBar() {
   const [searchQuery,setSearchQuery] = useState('');
   const setTasks = useSetRecoilState(Tasks);
   const [sortBy,setSortBy] = useState('date_modified');
+  const  setAddForm = useSetRecoilState(isOpenAddForm);
+
+  const openModal = ()=>{
+    setAddForm(prev => ({...prev,isOpen:true}));
+  }
 
   let timeout = null;
 
@@ -43,13 +49,13 @@ function SearchBar() {
   }
 
 
-  const navigateToAddTask = ()=>{
-    navigate('/addTask');
-  };
+  // const navigateToAddTask = ()=>{
+  //   navigate('/addTask');
+  // };
   
   return (
     <div className='m-1'>
-        <button className='bg-blue-500 p-2 rounded-md text-center w-32 text-white my-2' onClick={()=>navigateToAddTask()}>Add Task</button>
+        <button className='bg-blue-500 p-2 rounded-md text-center w-32 text-white my-2' onClick={()=>{openModal()}}>Add Task</button>
         <div className='flex justify-between items-center mb-5 p-1 rounded-md px-2 flex-wrap' style={{boxShadow:'0px 0px 3.4px grey'}}>
             
             <div>

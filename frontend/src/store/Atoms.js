@@ -32,3 +32,26 @@ export const navAt = atom({
   key: "navAt",
   default: "login",
 });
+
+export const isOpenAddForm = atom({
+  key: "isOpenAddForm",
+  default: {
+    isOpen: false,
+  },
+});
+
+export const isOpenEditForm = atom({
+  key: "isOpenEditForm",
+  default: {
+    isOpen: false,
+    id: "",
+  },
+});
+
+export const isOpenViewDetails = atom({
+  key: "isOpenViewDetails",
+  default: {
+    isOpen: false,
+    id: "",
+  },
+});

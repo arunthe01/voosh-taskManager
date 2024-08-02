@@ -5,19 +5,24 @@ import {Tasks} from '../store/Atoms';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import BACKEND_URL from '../../consts';
+import { isOpenEditForm } from '../store/Atoms';
+import { isOpenViewDetails } from '../store/Atoms';
+
+
 function Task({ele,idx}) {
   const [taskList, setTaskList] = useRecoilState(Tasks);
-  const navigate = useNavigate();
+  const [isOpenView, setIsOpenView] = useRecoilState(isOpenViewDetails);
+  const [isOpenEdit, setIsOpenEditForm] = useRecoilState(isOpenEditForm);
+  //console.log(isOpenEdit);
 
 
 const navigateToPage = (id)=>{
-    const toUrl = `/viewDetails?id=${id}`;
-    navigate(toUrl);
+  setIsOpenView(prev =>({...prev, isOpen:true,id:id}));
 }
 
 const navigateToEditPage = (id)=>{
-  const toUrl = `/editTask?id=${id}`;
-    navigate(toUrl);
+  setIsOpenEditForm(prev =>({...prev,isOpen:true,id:id}));
+
 }
 
 const handleDelete = (id) => {
@@ -64,7 +69,7 @@ const handleDelete = (id) => {
               </div>
               <div>
                   <p className='text-left'>created at:{formatISODateToIST(ele.createdAt)}</p>
-                  <div className='float-right mt-2'> <button className='bg-red-500 px-2 py-1 rounded-md mr-1' onClick={()=>{handleDelete(ele._id)}}>Delete</button> <button className='bg-blue-300 px-2 py-1 rounded-md mr-1' onClick={()=>navigateToEditPage(ele._id)}>Edit</button> <button className='bg-blue-400 px-2 py-1 rounded-md mr-1' onClick={()=>navigateToPage(ele._id)}>View details</button> </div>
+                  <div className='flex md:justify-end m-2'> <button className='bg-red-500 px-2 py-1 rounded-md mr-1 text-white' onClick={()=>{handleDelete(ele._id)}}>Delete</button> <button className='bg-blue-500 px-2 py-1 rounded-md mr-1 text-white' onClick={()=>navigateToEditPage(ele._id)}>Edit</button> <button className='bg-blue-600 px-2 py-1 rounded-md mr-1 text-white' onClick={()=>navigateToPage(ele._id)}>View details</button> </div>
               </div>
           </div>
         }
@@ -78,12 +83,12 @@ const formatISODateToIST = (isoString) => {
   // Convert the ISO string to a Date object
   const date = new Date(isoString);
 
-  // Convert the date to IST by adding 5 hours and 30 minutes
-  const istOffset = 5.5 * 60; // IST is UTC+5:30, so 5.5 hours in minutes
-  const utcMinutes = date.getUTCMinutes() + date.getUTCHours() * 60;
-  const istMinutes = utcMinutes + istOffset;
-
-  const istDate = new Date(date.getTime() + (istMinutes - utcMinutes) * 60000);
+  // IST is UTC+5:30, which is 330 minutes ahead of UTC
+  const istOffsetInMinutes = 330; // 5 hours 30 minutes
+  const utcOffsetInMinutes = date.getTimezoneOffset();
+  
+  // Calculate IST time
+  const istDate = new Date(date.getTime() + (istOffsetInMinutes + utcOffsetInMinutes) * 60000);
 
   // Helper function to format the time in 12-hour format
   const formatTime12Hour = (date) => {
@@ -103,5 +108,8 @@ const formatISODateToIST = (isoString) => {
 
   return formattedDate;
 };
+
+
+
 
 export default Task

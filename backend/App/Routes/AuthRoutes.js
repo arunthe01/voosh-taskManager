@@ -20,7 +20,7 @@ Authrouter.post("/signup", async (req, res) => {
       firstName.length > 0 &&
       lastName.length > 0
     ) {
-      const savedUser = saveUser(email, password);
+      const savedUser = saveUser(email, password,firstName,lastName);
       if (savedUser) {
         return res.status(200).json({
           message: "User saved successfully",

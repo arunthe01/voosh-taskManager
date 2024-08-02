@@ -1,28 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Modal from 'react-modal';
 import BACKEND_URL from '../../consts';
 import { Tasks } from '../store/Atoms';
-import { isOpenAddForm } from '../store/Atoms';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-
+import { isOpenEditForm } from '../store/Atoms';
 // Set the app element for accessibility
 Modal.setAppElement('#root');
 
-function AddForm() {
-  const navigate = useNavigate();
+function EditModal() {
 
   const [formData, setFormData] = useState({ title: '', description: '', status: 'todo' });
   const [errorState, setErrorState] = useState({ isValidTitle: true, isValidDescription: true });
-  const [isOpen,setIsOpen] = useRecoilState(isOpenAddForm);
+  const [isOpen,setIsOpen] = useRecoilState(isOpenEditForm);
   const setTasks = useSetRecoilState(Tasks);
+
+
+  useEffect(()=>{
+    if (!isOpen.id) {
+      return;
+    }
+    //console.log(isOpen.id);
+    axios.get(BACKEND_URL+'/taskManager/taskdetails',{
+        headers: {
+          'Authorization': localStorage.getItem('TaskManagerToken'),
+          'Content-Type': 'application/json',
+        },  params: {
+          taskId: isOpen.id
+        }
+      }).then(res=>{
+        //console.log(res.data.task);
+        setFormData(res.data.task);
+      })
+},[isOpen])
+
 
   const changeHandler = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  const closeAddFormModal =  () => setIsOpen(prev => ({...prev,isOpen:false}));
+  const closeAddFormModal =  () => setIsOpen(prev => ({...prev,isOpen:false,link:''}));
   const validateAndAddTask = () => {
     if (formData.title.trim().length === 0) {
       setErrorState(prev => ({ ...prev, isValidTitle: false }));
@@ -35,46 +53,55 @@ function AddForm() {
   }
 
   const addTask = () => {
-    axios.post(BACKEND_URL + "/taskManager/addTask", {
+    axios.put(BACKEND_URL + "/taskManager/editTask", {
       title: formData.title,
       description: formData.description,
       status: formData.status,
+      taskId:isOpen.id
     }, {
       headers: {
         'Authorization': localStorage.getItem('TaskManagerToken'),  // Basic authentication header
         'Content-Type': 'application/json'  // Content type
       }
-    }).then((res) => {
-      console.log(res.data.newTask);
+    }).then((res) => {   
+      //console.log(res);
       setTasks(prev => {
-        if (res.data.newTask.status === 'todo') {
-            const updatedTodoValues = [...prev.columns[0].values, res.data.newTask];
+        if (res.data.editedTask.status === 'todo') {
+            let todoValues = [...prev.columns[0].values]; 
+            const indexToReplace =todoValues.findIndex(item => item.id === res.data.editedTask._id);
+            todoValues.splice(indexToReplace,1,res.data.editedTask);
+            console.log(todoValues,"arun new");
             return {
                 ...prev,
                 columns: [
-                    { ...prev.columns[0], values: updatedTodoValues },
+                    { ...prev.columns[0], values: todoValues },
                     prev.columns[1],
                     prev.columns[2]
                 ]
             };
-        } else if (res.data.newTask.status === 'inprogress') {
-            const updatedInProgressValues = [...prev.columns[1].values, res.data.newTask];
+        } else if (res.data.editedTask.status === 'inprogress') {
+          let todoValues = [...prev.columns[1].values]; 
+            const indexToReplace =todoValues.findIndex(item => item.id === res.data.editedTask._id);
+            todoValues.splice(indexToReplace,1,res.data.editedTask);
             return {
                 ...prev,
                 columns: [
                     prev.columns[0],
-                    { ...prev.columns[1], values: updatedInProgressValues },
+                    { ...prev.columns[1], values: todoValues },
                     prev.columns[2]
                 ]
             };
         } else {
-            const updatedCompletedValues = [...prev.columns[2].values, res.data.newTask];
+          let todoValues = [...prev.columns[2].values]; 
+            const indexToReplace =todoValues.findIndex(item => item.id === res.data.editedTask._id);
+            todoValues.splice(indexToReplace,1,res.data.editedTask);
+            //console.log(todoValues,"After editing");
             return {
                 ...prev,
                 columns: [
                     prev.columns[0],
                     prev.columns[1],
-                    { ...prev.columns[2], values: updatedCompletedValues }
+                    { ...prev.columns[2], values: todoValues }
                 ]
             };
         }
@@ -120,4 +147,4 @@ function AddForm() {
   )
 }
 
-export default AddForm;
+export default EditModal;

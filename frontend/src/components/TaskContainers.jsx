@@ -5,30 +5,21 @@ import { useRecoilValue,useRecoilState } from 'recoil';
 import { Tasks } from '../store/Atoms';
 import axios from 'axios';
 import BACKEND_URL from '../../consts';
-
+import AddForm from './AddForm';
+import EditModal from './EditModal';
+import ViewDetailsModal from './ViewDetailsModal';
+import { isOpenAddForm } from '../store/Atoms';
+import { isOpenEditForm } from '../store/Atoms';
+import { isOpenViewDetails } from '../store/Atoms';
 
 
 
 function TaskContainers() {
 
     const [taskList, setTaskList] = useRecoilState(Tasks);
-
-    //console.log(taskList);
-
-    // useEffect(()=>{
-    //      axios.get(BACKEND_URL+'/taskManager/tasks', {
-    //         headers: {
-    //           'Authorization': localStorage.getItem('TaskManagerToken'),
-    //           'Content-Type': 'application/json',
-    //         },
-    //       }).then(response=>{
-    //         const columns =  response.data.tasks;
-    //         console.log(columns);
-    //          setTaskList(prev => ({...prev,columns:columns}));
-    //       })
-    // },[]);
-
-
+    const editFormState = useRecoilValue(isOpenEditForm)
+    const addFormState = useRecoilValue(isOpenAddForm)
+    const viewDetailsState = useRecoilValue(isOpenViewDetails)
 
     const onDragEnd = (result) => {
         const { destination, source, draggableId } = result;
@@ -146,6 +137,10 @@ function TaskContainers() {
             <TaskContainer tasklist={taskList.columns[1].values} id={1} title={'In Progress'}/>
             <TaskContainer tasklist={taskList.columns[2].values} id={2} title={'Done'}/>
         </div>
+       { addFormState.isOpen? <AddForm/>:''}
+        { editFormState.isOpen? <EditModal/>:''}
+        {viewDetailsState.isOpen?<ViewDetailsModal/>:''}
+       
     </DragDropContext>
   )
 }
