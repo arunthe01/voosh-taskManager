@@ -50,7 +50,7 @@ function SearchBar() {
   return (
     <div className='m-1'>
         <button className='bg-blue-500 p-2 rounded-md text-center w-32 text-white my-2' onClick={()=>navigateToAddTask()}>Add Task</button>
-        <div className='flex justify-between items-center mb-5 p-1 rounded-md px-2' style={{boxShadow:'0px 0px 3.4px grey'}}>
+        <div className='flex justify-between items-center mb-5 p-1 rounded-md px-2 flex-wrap' style={{boxShadow:'0px 0px 3.4px grey'}}>
             
             <div>
                 <label className='mr-1'>Search:</label>
@@ -59,7 +59,7 @@ function SearchBar() {
 
             <div>
                 <label className='mr-1'>SortBy:</label>
-                <select id="sortOptions" name="sortOptions" className="bg-white border border-gray-300 rounded-sm shadow-sm p-1 text-gray-700 outline-none w-32 md:w-64" value={sortBy} onChange={(e)=>{setSortBy(e.target.value)}}>
+                <select id="sortOptions" name="sortOptions" className="bg-white border border-gray-300  shadow-sm p-1 text-gray-700 outline-none rounded-md" value={sortBy} onChange={(e)=>{setSortBy(e.target.value)}}>
                     <option value="default"></option>
                     <option value="updatedAt">Date Modified</option>
                     <option value="title">title</option>

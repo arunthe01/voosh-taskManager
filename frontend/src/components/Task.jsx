@@ -64,7 +64,7 @@ const handleDelete = (id) => {
               </div>
               <div>
                   <p className='text-left'>created at:{formatISODateToIST(ele.createdAt)}</p>
-                  <div className='float-right'> <button className='bg-red-400 p-2 rounded-md m-1' onClick={()=>{handleDelete(ele._id)}}>Delete</button> <button className='bg-blue-300 p-2 rounded-md m-1' onClick={()=>navigateToEditPage(ele._id)}>Edit</button> <button className='bg-blue-400 p-2 rounded-md my-2 ml-2' onClick={()=>navigateToPage(ele._id)}>View details</button> </div>
+                  <div className='float-right mt-2'> <button className='bg-red-500 px-2 py-1 rounded-md mr-1' onClick={()=>{handleDelete(ele._id)}}>Delete</button> <button className='bg-blue-300 px-2 py-1 rounded-md mr-1' onClick={()=>navigateToEditPage(ele._id)}>Edit</button> <button className='bg-blue-400 px-2 py-1 rounded-md mr-1' onClick={()=>navigateToPage(ele._id)}>View details</button> </div>
               </div>
           </div>
         }
