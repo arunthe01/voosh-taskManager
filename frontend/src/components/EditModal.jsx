@@ -64,13 +64,12 @@ function EditModal() {
         'Content-Type': 'application/json'  // Content type
       }
     }).then((res) => {   
-      //console.log(res);
       setTasks(prev => {
         if (res.data.editedTask.status === 'todo') {
             let todoValues = [...prev.columns[0].values]; 
-            const indexToReplace =todoValues.findIndex(item => item.id === res.data.editedTask._id);
+            const indexToReplace =todoValues.findIndex(item => item._id == res.data.editedTask._id);
             todoValues.splice(indexToReplace,1,res.data.editedTask);
-            console.log(todoValues,"arun new");
+            //console.log(todoValues,"arun new");
             return {
                 ...prev,
                 columns: [
@@ -81,8 +80,12 @@ function EditModal() {
             };
         } else if (res.data.editedTask.status === 'inprogress') {
           let todoValues = [...prev.columns[1].values]; 
-            const indexToReplace =todoValues.findIndex(item => item.id === res.data.editedTask._id);
+          //console.log(todoValues);
+            const indexToReplace =todoValues.findIndex(item => item._id == res.data.editedTask._id);
+
             todoValues.splice(indexToReplace,1,res.data.editedTask);
+            // console.log(indexToReplace);
+            // console.log(todoValues);
             return {
                 ...prev,
                 columns: [
@@ -93,7 +96,7 @@ function EditModal() {
             };
         } else {
           let todoValues = [...prev.columns[2].values]; 
-            const indexToReplace =todoValues.findIndex(item => item.id === res.data.editedTask._id);
+            const indexToReplace =todoValues.findIndex(item => item._id == res.data.editedTask._id);
             todoValues.splice(indexToReplace,1,res.data.editedTask);
             //console.log(todoValues,"After editing");
             return {
